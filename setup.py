@@ -17,7 +17,7 @@ from setuptools import setup
 
 setup(
     name='cloudify-plugin-installer-plugin',
-    version='1.2rc1',
+    version='1.2',
     author='Cloudify',
     author_email='cosmo-admin@gigaspaces.com',
     packages=['plugin_installer'],
