@@ -18,6 +18,7 @@ import shutil
 from cloudify import ctx
 from cloudify.exceptions import NonRecoverableError
 from cloudify.utils import get_manager_file_server_blueprints_root_url
+from cloudify.utils import get_agent_name
 from cloudify.decorators import operation
 
 from plugin_installer import VIRTUALENV
@@ -43,8 +44,12 @@ def install_plugin(plugin):
             .format(name, url, install_args))
 
         extracted_plugin_dir = utils.extract_plugin_dir(url)
-
         install_package(extracted_plugin_dir, install_args)
+        plugin_name = extract_plugin_name(url)
+        ctx.runner.run('{0} daemon register --name={1} --plugin={2}'
+                       .format(_cloudify_agent(),
+                               get_agent_name(),
+                               plugin_name))
     finally:
         if extracted_plugin_dir:
             shutil.rmtree(extracted_plugin_dir)
@@ -107,3 +112,7 @@ def get_url_and_args(plugin_dict):
 
 def _pip():
     return '{0}/bin/pip'.format(VIRTUALENV)
+
+
+def _cloudify_agent():
+    return '{0}/bin/cfy-agent'.format(VIRTUALENV)
