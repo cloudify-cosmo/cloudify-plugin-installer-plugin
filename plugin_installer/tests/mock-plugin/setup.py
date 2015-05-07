@@ -14,15 +14,13 @@
 #    * limitations under the License.
 # ***************************************************************************/
 
-__author__ = 'elip'
-
 from setuptools import setup
 
 setup(
     name='mock-plugin',
-    version='3.2a1',
-    author='elip',
-    author_email='elip@gigaspaces.com',
+    version='3.2',
+    author='Cloudify',
+    author_email='cosmo-admin@gigaspaces.com',
     packages=['mock_for_test'],
     license='LICENSE',
     description='Mock plugin for test',

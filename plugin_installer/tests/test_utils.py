@@ -12,28 +12,3 @@
 #    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    * See the License for the specific language governing permissions and
 #    * limitations under the License.
-
-import os
-import sys
-
-from functools import wraps
-
-from cloudify.state import current_ctx
-from cloudify import ctx
-from cloudify.utils import LocalCommandRunner
-
-
-VIRTUALENV = os.path.dirname(os.path.dirname(sys.executable))
-
-
-def init_plugin_installer(func):
-
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-
-        runner = LocalCommandRunner(logger=ctx.logger)
-        setattr(current_ctx.get_ctx(), 'runner', runner)
-
-        return func(*args, **kwargs)
-
-    return wrapper
